@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Tom Manley</title><link>/</link><description></description><atom:link href="/feeds/tom-manley.rss.xml" rel="self"></atom:link><lastBuildDate>Thu, 11 Jun 2015 00:00:00 -0500</lastBuildDate><item><title>Open Sesame</title><link>/posts/2015/Jun/11/open-sesame/</link><description>&lt;p&gt;I have been busy over the last few months working on a Wi-Fi controlled kennel door opener for
+my dog. Her kennel is the basement where it is cool and quiet, and it would be convenient to open
+the door without having to walk downstairs.&lt;/p&gt;
+&lt;p&gt;The brains is a &lt;a href="https://www.pjrc.com/teensy/teensyLC.html"&gt;Teensy LC&lt;/a&gt; that gets signaled
+to open the door over Wi-Fi and opens the door using a servo. After breadboarding up a prototype,
+I designed the PCB in &lt;a href="http://www.kicad-pcb.org/"&gt;Kicad&lt;/a&gt;, used &lt;a href="https://oshpark.com/"&gt;OSH Park&lt;/a&gt;
+to fab it, and designed the servo mount and arm in &lt;a href="http://www.sketchup.com/"&gt;Sketchup&lt;/a&gt; which
+my coworker 3D printed for me.&lt;/p&gt;
+&lt;p&gt;I'm still assembling the boards and working out what I hope are the last few bugs. I'll post
+more details when it is complete. In the meantime you can see the SW, HW and mechanical design
+files on &lt;a href="https://github.com/tpmanley/dogcage"&gt;Github&lt;/a&gt;.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Tom Manley</dc:creator><pubDate>Thu, 11 Jun 2015 00:00:00 -0500</pubDate><guid>tag:,2015-06-11:posts/2015/Jun/11/open-sesame/</guid><category>IoT</category><category>XBee</category><category>Kicad</category><category>Sketchup</category><category>Arduino</category></item><item><title>npm install TheEnemy</title><link>/posts/2015/Jan/06/npm-install-theenemy/</link><description>&lt;p&gt;OK, TheEnemy is a bit harsh, but I did check out a competitor's device cloud
+solution recently. It is called &lt;a href="http://octoblu.com"&gt;Octoblu&lt;/a&gt; and was founded
+in early 2014 and acquired by &lt;a href="http://www.citrix.com"&gt;Citrix&lt;/a&gt; in December
+2014. There are a couple of things that intrigued me about this solution. The
+first is that their cloud platform called Meshblu is open sourced on GitHub
+so anyone can run their own private instance. The other is they support both
+CoAP and MQTT. These two protocols work well on resource and bandwidth 
+contrained devices like many IoT devices are bound to be and so I've been
+looking for an opportunity to get more experience with them. It looks like
+Octoblu will give me that chance.&lt;/p&gt;
+&lt;p&gt;Installing Meshblu on my MacBook Pro was almost as simple as following the
+README in the &lt;a href="https://github.com/octoblu/meshblu"&gt;GitHub repo&lt;/a&gt;. First I
+cloned the repo:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;clone&lt;/span&gt; &lt;span class="n"&gt;https&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//github.com/octoblu/meshblu.git&lt;/span&gt;
+&lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="n"&gt;meshblu&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Then I installed it:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;npm&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;According to the README I was then supposed to copy the &lt;code&gt;config.fs.sample&lt;/code&gt; file
+over the &lt;code&gt;config.js&lt;/code&gt; file, but when I did that the next step didn't work so
+I just left &lt;code&gt;config.fs&lt;/code&gt; as is.&lt;/p&gt;
+&lt;p&gt;Meshblu optionally supports Mongo, Redis, ElasticSearch and Splunk for
+scalability and performance but I wasn't interested in any of that right now
+so I left the configuration with the default settings. I did change the
+HTTP and HTTPS port so I didn't need to run the server as root:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gh"&gt;diff --git a/config.js b/config.js&lt;/span&gt;
+&lt;span class="gh"&gt;index db7b6c3..36b6a59 100644&lt;/span&gt;
+&lt;span class="gd"&gt;--- a/config.js&lt;/span&gt;
+&lt;span class="gi"&gt;+++ b/config.js&lt;/span&gt;
+&lt;span class="gu"&gt;@@ -16,9 +16,9 @@ module.exports = {&lt;/span&gt;
+   mongo: {
+     databaseUrl: process.env.MONGODB_URI
+   },
+&lt;span class="gd"&gt;-  port: parseInt(process.env.PORT) || 80,&lt;/span&gt;
+&lt;span class="gi"&gt;+  port: parseInt(process.env.PORT) || 8080,&lt;/span&gt;
+   tls: {
+&lt;span class="gd"&gt;-    sslPort: parseInt(process.env.SSL_PORT) || 443,&lt;/span&gt;
+&lt;span class="gi"&gt;+    sslPort: parseInt(process.env.SSL_PORT) || 8443,&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Next I ran the server:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;node&lt;/span&gt; &lt;span class="n"&gt;server&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;js&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;http&lt;/span&gt;
+
+&lt;span class="n"&gt;MM&lt;/span&gt;    &lt;span class="n"&gt;MM&lt;/span&gt;              &lt;span class="n"&gt;hh&lt;/span&gt;      &lt;span class="n"&gt;bb&lt;/span&gt;      &lt;span class="n"&gt;lll&lt;/span&gt;         
+&lt;span class="n"&gt;MMM&lt;/span&gt;  &lt;span class="n"&gt;MMM&lt;/span&gt;   &lt;span class="n"&gt;eee&lt;/span&gt;   &lt;span class="n"&gt;sss&lt;/span&gt;  &lt;span class="n"&gt;hh&lt;/span&gt;      &lt;span class="n"&gt;bb&lt;/span&gt;      &lt;span class="n"&gt;lll&lt;/span&gt; &lt;span class="n"&gt;uu&lt;/span&gt;   &lt;span class="n"&gt;uu&lt;/span&gt; 
+&lt;span class="n"&gt;MM&lt;/span&gt; &lt;span class="n"&gt;MM&lt;/span&gt; &lt;span class="n"&gt;MM&lt;/span&gt; &lt;span class="n"&gt;ee&lt;/span&gt;   &lt;span class="n"&gt;e&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt;     &lt;span class="n"&gt;hhhhhh&lt;/span&gt;  &lt;span class="n"&gt;bbbbbb&lt;/span&gt;  &lt;span class="n"&gt;lll&lt;/span&gt; &lt;span class="n"&gt;uu&lt;/span&gt;   &lt;span class="n"&gt;uu&lt;/span&gt; 
+&lt;span class="n"&gt;MM&lt;/span&gt;    &lt;span class="n"&gt;MM&lt;/span&gt; &lt;span class="n"&gt;eeeee&lt;/span&gt;   &lt;span class="n"&gt;sss&lt;/span&gt;  &lt;span class="n"&gt;hh&lt;/span&gt;   &lt;span class="n"&gt;hh&lt;/span&gt; &lt;span class="n"&gt;bb&lt;/span&gt;   &lt;span class="n"&gt;bb&lt;/span&gt; &lt;span class="n"&gt;lll&lt;/span&gt; &lt;span class="n"&gt;uu&lt;/span&gt;   &lt;span class="n"&gt;uu&lt;/span&gt; 
+&lt;span class="n"&gt;MM&lt;/span&gt;    &lt;span class="n"&gt;MM&lt;/span&gt;  &lt;span class="n"&gt;eeeee&lt;/span&gt;     &lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="n"&gt;hh&lt;/span&gt;   &lt;span class="n"&gt;hh&lt;/span&gt; &lt;span class="n"&gt;bbbbbb&lt;/span&gt;  &lt;span class="n"&gt;lll&lt;/span&gt;  &lt;span class="n"&gt;uuuu&lt;/span&gt; &lt;span class="n"&gt;u&lt;/span&gt; 
+                 &lt;span class="n"&gt;sss&lt;/span&gt;                              
+&lt;span class="n"&gt;Meshblu&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;formerly&lt;/span&gt; &lt;span class="n"&gt;skynet&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;im&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;development&lt;/span&gt; &lt;span class="n"&gt;environment&lt;/span&gt; &lt;span class="n"&gt;loaded&lt;/span&gt;&lt;span class="p"&gt;...&lt;/span&gt;
+
+&lt;span class="n"&gt;Starting&lt;/span&gt; &lt;span class="n"&gt;HTTP&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;HTTPS&lt;/span&gt;&lt;span class="p"&gt;...&lt;/span&gt; &lt;span class="n"&gt;done&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;HTTP&lt;/span&gt; &lt;span class="n"&gt;listening&lt;/span&gt; &lt;span class="n"&gt;at&lt;/span&gt; &lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//0.0.0.0:8080&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And finally a basic test:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;curl&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;X&lt;/span&gt; &lt;span class="n"&gt;GET&lt;/span&gt; &lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//localhost:8080/status&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;meshblu&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;online&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;I got little stuck at this point because the I didn't read the documenation
+carefully and just tried commands pseudo-randomly. It didn't take too long 
+before I figured out I needed to add a device and then use the authentication
+credentials (a UUID and secret token) to use most of the HTTP API. That was pretty
+straightforward:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;curl&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;X&lt;/span&gt; &lt;span class="n"&gt;POST&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;type=example&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//localhost:8080/devices&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;type&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;example&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;ipAddress&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;127.0.0.1&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;uuid&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;7c348710-955a-11e4-820b-0f6c4a76a790&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;timestamp&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;2015-01-06T04:14:18.972Z&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;token&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;0086jbhffmc5zh0k9bckcr90lkvjkyb9&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;channel&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;main&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;online&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="nb"&gt;false&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;geo&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;null&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The &lt;code&gt;uuid&lt;/code&gt; and &lt;code&gt;token&lt;/code&gt; fields are the important ones. To access say the 
+&lt;code&gt;/devices&lt;/code&gt; endpoint you pass those fields in with the HTTP headers like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;curl&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;X&lt;/span&gt; &lt;span class="n"&gt;GET&lt;/span&gt; &lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//localhost:8080/devices --header &amp;quot;meshblu_auth_uuid: 7c348710-955a-11e4-820b-0f6c4a76a790&amp;quot; --header &amp;quot;meshblu_auth_token: 0086jbhffmc5zh0k9bckcr90lkvjkyb9&amp;quot;&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;devices&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="p"&gt;[{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;type&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;example&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;ipAddress&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;127.0.0.1&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;uuid&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;7c348710-955a-11e4-820b-0f6c4a76a790&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;timestamp&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;2015-01-06T04:14:18.972Z&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;token&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;0086jbhffmc5zh0k9bckcr90lkvjkyb9&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;channel&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;main&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;online&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="nb"&gt;false&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;geo&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;null&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;_id&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;L5tEWjAITwhp5n8H&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}]}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;That's about as far as I've got so far, but I look forward to trying out the
+CoAP and MQTT APIs in the near future.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Tom Manley</dc:creator><pubDate>Tue, 06 Jan 2015 00:00:00 -0600</pubDate><guid>tag:,2015-01-06:posts/2015/Jan/06/npm-install-theenemy/</guid><category>IoT</category><category>cloud</category><category>M2M</category></item><item><title>Freedom board and mbed</title><link>/posts/2014/Dec/23/freedom-board-and-mbed/</link><description>&lt;p&gt;Freescale makes an inexpensive development platform for the Kinetis L series 
+processors called the Freedom board. I borrowed the 
+&lt;a href="http://www.freescale.com/webapp/sps/site/prod_summary.jsp?code=FRDM-KL25Z"&gt;FRDM-KL25Z&lt;/a&gt;
+from a coworker. It has a MKL25Z Cortex-M0+ processor with an RGB LED, a 
+capacitive touch slider, serial, GPIOs, etc... &lt;/p&gt;
+&lt;p&gt;There are a number of options for develping for the Freedom board, including
+the Eclipse-based Kinetis Design Studio and CodeWarrior, but I decided to give
+&lt;a href="https://mbed.org/"&gt;mbed&lt;/a&gt; a try. Mbed is an operating system for ARM Cortex-M
+processors. It has a web-based development environment and compiler which makes
+it really easy to try out. &lt;/p&gt;
+&lt;p&gt;The mbed environment has a number of sample apps for the KL25Z. The frdm_gpio
+app basically just flashes the RGB LED and a toggles a digial output. I added
+a SPI master device to the sample app that just wrote 0xA5 in a loop so I could
+have something interesting to look at with the Saleae logic analyzer. Here is 
+the code:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cp"&gt;#include &amp;quot;mbed.h&amp;quot;&lt;/span&gt;
+
+&lt;span class="n"&gt;DigitalOut&lt;/span&gt; &lt;span class="nf"&gt;gpo&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;D0&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="n"&gt;DigitalOut&lt;/span&gt; &lt;span class="nf"&gt;led&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;LED_RED&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="n"&gt;SPI&lt;/span&gt; &lt;span class="nf"&gt;device&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;PTD2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;PTD3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;PTD1&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;device&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;gpo&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="n"&gt;gpo&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;// toggle pin&lt;/span&gt;
+        &lt;span class="n"&gt;led&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="n"&gt;led&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;// toggle led&lt;/span&gt;
+        &lt;span class="n"&gt;device&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;write&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;0xA5&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+        &lt;span class="n"&gt;wait&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;0.2f&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+   &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;I attached one of the probes on the Logic8 to pin PTD2 which was configured as
+the Master-In Slave-Out (MOSI) PIN on the SPI device. Another probe was attached
+to PTD1 which was configured as SCLK. Then I captured a trace while running the 
+app and verified the alternating bit pattern of 0xA5 showed up in the capture.&lt;/p&gt;
+&lt;p&gt;This was all really simple but after spending so much time on management
+and business stuff lately it was fun to get my hands dirty. I definitely would
+like to learn more about mbed and also try out the Kinetis Design Studio.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Tom Manley</dc:creator><pubDate>Tue, 23 Dec 2014 00:00:00 -0600</pubDate><guid>tag:,2014-12-23:posts/2014/Dec/23/freedom-board-and-mbed/</guid><category>FRDM-KL25Z</category><category>mbed</category><category>logic8</category></item><item><title>Router Problems</title><link>/posts/2014/Nov/07/router-problems/</link><description>&lt;p&gt;I've spent the last few evenings messing around with my Wi-Fi router. It's an Asus RT-N66U 
+Dark Knight and it worked great for a few months but then it all went south on Monday 
+night. Basically all of our devices couldn't load web pages, and rebooting the router and
+the modem didn't help. The worst was the Roku didn't work so we had to watch basic cable!
+There was a minor firmware update available for the router but that didn't change things. On recommendation
+from a coworker I tried the &lt;a href="http://www.lostrealm.ca/tower/node/79"&gt;Merlin&lt;/a&gt; firmware which
+is based on the official Asus firmware with some bug fixes and minor feature updates. One of
+the nice features is support for a ssh server. You just need to enable it in the web interface
+and then you can login with the same username/password that you use for the web. I've been
+poking around and it's pretty interesting. &lt;/p&gt;
+&lt;p&gt;It's running Linux kernel 2.6.22:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;admin@RT-N66U-2DE0:/tmp/home/root# uname -a
+Linux RT-N66U-2DE0 2.6.22.19 &lt;span class="c"&gt;#1 Sat Sep 20 14:47:02 EDT 2014 mips GNU/Linux&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;We're doing a router project at work with kernel 2.6.35 so it's kind of similar.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;admin@RT-N66U-2DE0:/# mount
+rootfs on / &lt;span class="nb"&gt;type &lt;/span&gt;rootfs &lt;span class="o"&gt;(&lt;/span&gt;rw&lt;span class="o"&gt;)&lt;/span&gt;
+/dev/root on / &lt;span class="nb"&gt;type &lt;/span&gt;squashfs &lt;span class="o"&gt;(&lt;/span&gt;ro&lt;span class="o"&gt;)&lt;/span&gt;
+proc on /proc &lt;span class="nb"&gt;type &lt;/span&gt;proc &lt;span class="o"&gt;(&lt;/span&gt;rw&lt;span class="o"&gt;)&lt;/span&gt;
+tmpfs on /tmp &lt;span class="nb"&gt;type &lt;/span&gt;tmpfs &lt;span class="o"&gt;(&lt;/span&gt;rw&lt;span class="o"&gt;)&lt;/span&gt;
+devfs on /dev &lt;span class="nb"&gt;type &lt;/span&gt;tmpfs &lt;span class="o"&gt;(&lt;/span&gt;rw,noatime&lt;span class="o"&gt;)&lt;/span&gt;
+sysfs on /sys &lt;span class="nb"&gt;type &lt;/span&gt;sysfs &lt;span class="o"&gt;(&lt;/span&gt;rw&lt;span class="o"&gt;)&lt;/span&gt;
+devpts on /dev/pts &lt;span class="nb"&gt;type &lt;/span&gt;devpts &lt;span class="o"&gt;(&lt;/span&gt;rw&lt;span class="o"&gt;)&lt;/span&gt;
+usbfs on /proc/bus/usb &lt;span class="nb"&gt;type &lt;/span&gt;usbfs &lt;span class="o"&gt;(&lt;/span&gt;rw&lt;span class="o"&gt;)&lt;/span&gt;
+admin@RT-N66U-2DE0:/# ls -l
+drwxrwxr-x    2 admin    root             3 Sep 20 14:11 asus_jffs
+drwxr-xr-x    2 admin    root           550 Sep 20 14:10 bin
+drwxr-xr-x    2 admin    root             3 Sep 20 14:11 cifs1
+drwxr-xr-x    2 admin    root             3 Sep 20 14:11 cifs2
+drwxrwxrwt    4 admin    root          1660 Nov  6 20:55 dev
+lrwxrwxrwx    1 admin    root             7 Sep 20 14:11 etc -&amp;gt; tmp/etc
+lrwxrwxrwx    1 admin    root             8 Sep 20 14:11 home -&amp;gt; tmp/home
+drwxr-xr-x    2 admin    root             3 Sep 20 14:11 jffs
+drwxr-xr-x    3 admin    root           354 Sep 20 14:11 lib
+drwxr-xr-x    2 admin    root             3 Sep 20 14:11 mmc
+lrwxrwxrwx    1 admin    root             7 Sep 20 14:11 mnt -&amp;gt; tmp/mnt
+lrwxrwxrwx    1 admin    root             7 Sep 20 14:11 opt -&amp;gt; tmp/opt
+dr-xr-xr-x   63 admin    root             0 Dec 31  1999 proc
+drwxr-xr-x    5 admin    root           651 Sep 20 14:11 rom
+lrwxrwxrwx    1 admin    root            13 Sep 20 14:11 root -&amp;gt; tmp/home/root
+drwxr-xr-x    2 admin    root          1640 Sep 20 14:11 sbin
+drwxr-xr-x   10 admin    root             0 Dec 31  1999 sys
+drwxr-xr-x    2 admin    root             3 Sep 20 14:11 sysroot
+drwxrwxrwx   10 admin    root           580 Nov  6 21:40 tmp
+drwxr-xr-x    7 admin    root           105 Sep 20 14:11 usr
+lrwxrwxrwx    1 admin    root             7 Sep 20 14:11 var -&amp;gt; tmp/var
+drwxr-xr-x   11 admin    root          5082 Sep 20 14:11 www
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The rootfs is a readonly SquashFS, and directories like /etc are symlinked from a tmpfs.&lt;/p&gt;
+&lt;p&gt;It doesn't have the Wi-Fi tools I'm used to like iwconfig or iw, and I was surprised 
+not to see any Wi-Fi interfaces in ifconfig:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;admin@RT-N66U-2DE0:/tmp# ifconfig
+br0        Link encap:Ethernet  HWaddr 40:16:7E:EA:2D:E0  
+           inet addr:192.168.1.1  Bcast:192.168.1.255  Mask:255.255.255.0
+           UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+           RX packets:52230608 errors:0 dropped:0 overruns:0 frame:0
+           TX packets:433740 errors:0 dropped:0 overruns:0 carrier:0
+           collisions:0 txqueuelen:0 
+           RX bytes:1594773459 &lt;span class="o"&gt;(&lt;/span&gt;1.4 GiB&lt;span class="o"&gt;)&lt;/span&gt;  TX bytes:89779676 &lt;span class="o"&gt;(&lt;/span&gt;85.6 MiB&lt;span class="o"&gt;)&lt;/span&gt;
+
+eth0       Link encap:Ethernet  HWaddr 40:16:7E:EA:2D:E0  
+           inet addr:XXX.XXX.XXX.XXX  Bcast:XXX.XXX.XXX.XXX  Mask:255.255.240.0
+           UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+           RX packets:5405694 errors:0 dropped:0 overruns:0 frame:0
+           TX packets:53877525 errors:0 dropped:0 overruns:0 carrier:0
+           collisions:0 txqueuelen:1000 
+           RX bytes:693615441 &lt;span class="o"&gt;(&lt;/span&gt;661.4 MiB&lt;span class="o"&gt;)&lt;/span&gt;  TX bytes:3116562699 &lt;span class="o"&gt;(&lt;/span&gt;2.9 GiB&lt;span class="o"&gt;)&lt;/span&gt;
+           Interrupt:4 Base address:0x2000
+
+eth1       Link encap:Ethernet  HWaddr 40:16:7E:EA:2D:E0  
+           UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+           RX packets:50065089 errors:0 dropped:0 overruns:0 frame:1378764
+           TX packets:36198574 errors:11578317 dropped:0 overruns:0 carrier:0
+           collisions:0 txqueuelen:1000 
+           RX bytes:2058365479 &lt;span class="o"&gt;(&lt;/span&gt;1.9 GiB&lt;span class="o"&gt;)&lt;/span&gt;  TX bytes:604413991 &lt;span class="o"&gt;(&lt;/span&gt;576.4 MiB&lt;span class="o"&gt;)&lt;/span&gt;
+           Interrupt:3 Base address:0x8000
+
+eth2       Link encap:Ethernet  HWaddr 40:16:7E:EA:2D:E4  
+           UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+           RX packets:1940719 errors:0 dropped:0 overruns:0 frame:82081
+           TX packets:53933151 errors:5506 dropped:0 overruns:0 carrier:0
+           collisions:0 txqueuelen:1000 
+           RX bytes:570566131 &lt;span class="o"&gt;(&lt;/span&gt;544.1 MiB&lt;span class="o"&gt;)&lt;/span&gt;  TX bytes:2872841696 &lt;span class="o"&gt;(&lt;/span&gt;2.6 GiB&lt;span class="o"&gt;)&lt;/span&gt;
+           Interrupt:5 Base address:0x8000
+
+lo         Link encap:Local Loopback  
+           inet addr:127.0.0.1  Mask:255.0.0.0
+           UP LOOPBACK RUNNING MULTICAST  MTU:16436  Metric:1
+           RX packets:80741 errors:0 dropped:0 overruns:0 frame:0
+           TX packets:80741 errors:0 dropped:0 overruns:0 carrier:0
+           collisions:0 txqueuelen:0 
+           RX bytes:16345659 &lt;span class="o"&gt;(&lt;/span&gt;15.5 MiB&lt;span class="o"&gt;)&lt;/span&gt;  TX bytes:16345659 &lt;span class="o"&gt;(&lt;/span&gt;15.5 MiB&lt;span class="o"&gt;)&lt;/span&gt;
+
+vlan1      Link encap:Ethernet  HWaddr 40:16:7E:EA:2D:E0  
+           UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+           RX packets:13441 errors:0 dropped:0 overruns:0 frame:0
+           TX packets:51926724 errors:0 dropped:0 overruns:0 carrier:0
+           collisions:0 txqueuelen:0 
+           RX bytes:938656 &lt;span class="o"&gt;(&lt;/span&gt;916.6 KiB&lt;span class="o"&gt;)&lt;/span&gt;  TX bytes:2512739223 &lt;span class="o"&gt;(&lt;/span&gt;2.3 GiB&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Turns out eth1 and eth2 are the wireless interfaces according to dmesg:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;eth1: Broadcom BCM4331 802.11 Wireless Controller 6.30.163.2002 &lt;span class="o"&gt;(&lt;/span&gt;r382208&lt;span class="o"&gt;)&lt;/span&gt;
+eth2: Broadcom BCM4331 802.11 Wireless Controller 6.30.163.2002 &lt;span class="o"&gt;(&lt;/span&gt;r382208&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;I assume only one of those is actually for the Wi-Fi interface and the other is
+connected to a switch feeding the gigabit wired ports. Or it's all internal to the
+Broadcom SOC. There must be some sort of control interface to the Wi-Fi interface 
+to support functions like scans and AP configuration, but I haven't figured out
+how that works yet. &lt;/p&gt;
+&lt;p&gt;In between poking around the filesystem I did figure out that only the 2.4GHz 
+operation is crap and 5Ghz is working fine. I've tried change channels and forcing
+20MHz channels to no avail. It's definitely looking like it is a hardware problem. Google
+indicates lot of people have had similar issues and none of the suggested fixes have
+worked for me.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Tom Manley</dc:creator><pubDate>Fri, 07 Nov 2014 00:00:00 -0600</pubDate><guid>tag:,2014-11-07:posts/2014/Nov/07/router-problems/</guid><category>wi-fi</category></item><item><title>Podcasts</title><link>/posts/2014/Oct/29/podcasts/</link><description>&lt;p&gt;These are the podcasts I'm listening to lately.&lt;/p&gt;
+&lt;h1&gt;&lt;a href="http://embedded.fm/"&gt;Embedded&lt;/a&gt;&lt;/h1&gt;
+&lt;p&gt;This is a technical podcast hosted by Elecia White, author of 
+&lt;a href="http://www.amazon.com/gp/product/1449302149/ref=as_li_ss_tl?ie=UTF8&amp;amp;camp=1789&amp;amp;creative=390957&amp;amp;creativeASIN=1449302149&amp;amp;linkCode=as2&amp;amp;tag=httpembefm-20"&gt;Making Embedded Systems&lt;/a&gt;. It's focused on embedded devices, 
+hardware hackers, makers, and gadgets. There are many good episodes,
+including one with my coworker Rob Faludi, author of 
+&lt;a href="http://www.amazon.com/gp/product/B004GTLFHI/ref=as_li_tl?ie=UTF8&amp;amp;camp=1789&amp;amp;creative=390957&amp;amp;creativeASIN=B004GTLFHI&amp;amp;linkCode=as2&amp;amp;tag=httpembefm-20&amp;amp;linkId=PQULDAK7MHSCIHP7"&gt;Building Wireless Sensor Networks&lt;/a&gt;.&lt;/p&gt;
+&lt;h1&gt;&lt;a href="http://minnov8.com/"&gt;Minnov8 Gang Podcast&lt;/a&gt;&lt;/h1&gt;
+&lt;p&gt;I just stumbled upon this one but it looks like it's been around quite a while. It has a good variety
+of local and national tech related coverage. The format seems to be that the hosts each pick topics
+from the news and then they discuss each topic for a few minutes. I've only listened to the last few
+episodes so far but they have covered a lot of topics I'm interested in like IoT, Android and iOS.&lt;/p&gt;
+&lt;h1&gt;&lt;a href="http://hak5.org/"&gt;Hak5&lt;/a&gt;&lt;/h1&gt;
+&lt;p&gt;This one is a video podcast from the company behind the &lt;a href="https://wifipineapple.com/"&gt;Wi-Fi Pineapple&lt;/a&gt;.
+I've only see a couple of episodes but it seems pretty good so far. It's already given me some ideas
+of some things I want to do with the Pineapple I bought for use at work and some Android apps I
+want to write.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Tom Manley</dc:creator><pubDate>Wed, 29 Oct 2014 00:00:00 -0500</pubDate><guid>tag:,2014-10-29:posts/2014/Oct/29/podcasts/</guid><category>podcast</category></item><item><title>Switching to Pelican</title><link>/posts/2014/Oct/11/switching-to-pelican/</link><description>&lt;p&gt;The last two years have been spent ignoring this site so obviously
+it is time to redo it. A coworker told me about &lt;a href="http://docs.getpelican.com/en/3.4.0/"&gt;Pelican&lt;/a&gt;
+a while back and it seemed like it would fit my needs so I gave it a try. I turned
+out to be really easy and I managed to convert the site to use Pelican
+and publish to Heroku in about two hours.&lt;/p&gt;
+&lt;p&gt;First I installed Pelican into a virtualenv and ran the quickstart:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;pip install pelican
+pelican-quickstart
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The quickstart just asks a few simple questions about the site. When
+it was done I poked around in &lt;code&gt;pelicanconf.py&lt;/code&gt; to see what knobs could
+be fiddled with. I fixed up the timezone, removed SITES and filled in 
+the SOCIAL links. This is what it looks like today:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/usr/bin/env python&lt;/span&gt;
+&lt;span class="c"&gt;# -*- coding: utf-8 -*- #&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;__future__&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;unicode_literals&lt;/span&gt;
+
+&lt;span class="n"&gt;AUTHOR&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;u&amp;#39;Tom Manley&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;SITENAME&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;u&amp;#39;Tom Manley&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;SITEURL&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;thomasmanley.org&amp;#39;&lt;/span&gt;
+
+&lt;span class="n"&gt;PATH&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;content&amp;#39;&lt;/span&gt;
+
+&lt;span class="n"&gt;TIMEZONE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;America/Chicago&amp;#39;&lt;/span&gt;
+
+&lt;span class="n"&gt;DEFAULT_LANG&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;u&amp;#39;en&amp;#39;&lt;/span&gt;
+
+&lt;span class="n"&gt;DEFAULT_CATEGORY&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;Dev&amp;#39;&lt;/span&gt;
+
+&lt;span class="n"&gt;ARTICLE_URL&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;posts/{date:%Y}/{date:%b}/{date:&lt;/span&gt;&lt;span class="si"&gt;%d&lt;/span&gt;&lt;span class="s"&gt;}/{slug}/&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;ARTICLE_SAVE_AS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;posts/{date:%Y}/{date:%b}/{date:&lt;/span&gt;&lt;span class="si"&gt;%d&lt;/span&gt;&lt;span class="s"&gt;}/{slug}/index.html&amp;#39;&lt;/span&gt;
+
+&lt;span class="c"&gt;# Feed generation is usually not desired when developing&lt;/span&gt;
+&lt;span class="n"&gt;FEED_ALL_ATOM&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;
+&lt;span class="n"&gt;CATEGORY_FEED_ATOM&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;
+&lt;span class="n"&gt;TRANSLATION_FEED_ATOM&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;
+
+&lt;span class="c"&gt;# Social widget&lt;/span&gt;
+&lt;span class="n"&gt;GITHUB_URL&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;https://github.com/tpmanley&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;SOCIAL&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Twitter&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;https://twitter.com/tpmanley&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+          &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Github&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;https://github.com/tpmanley&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+          &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;LinkedIn&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;https://www.linkedin.com/in/tpmanley/&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),)&lt;/span&gt;
+
+&lt;span class="n"&gt;DEFAULT_PAGINATION&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;False&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Since I setup Fabric during the quickstart process, testing the new site is easy:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;fab reserve
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This builds and serves up the site at &lt;code&gt;http://127.0.0.1:8000&lt;/code&gt;. The first thing that struck
+me is how nice it looks. Just another reminder that I'm not a frontend kind of
+guy.&lt;/p&gt;
+&lt;p&gt;Moving the content to Pelican was easy since it was already in Markdown. I just
+moved the static pages into &lt;code&gt;content/pages/&lt;/code&gt; and the single blog post (yeah, I
+don't write much) into &lt;code&gt;content&lt;/code&gt;.  &lt;/p&gt;
+&lt;p&gt;The last step was to publish the new site on Heroku. First I enabled the Heroku
+buildpack:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;heroku config:set &lt;span class="nv"&gt;BUILDPACK_URL&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;https://github.com/getpelican/heroku-buildpack-pelican
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Then I removed the &lt;code&gt;web:&lt;/code&gt; line from the &lt;code&gt;Procfile&lt;/code&gt; so now it is empty. Finally
+I committed all the changes and pushed to Heroku like normal. And that was basically
+it!&lt;/p&gt;
+&lt;p&gt;Only thing left to do is start writing more, and maybe replace the default theme.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Tom Manley</dc:creator><pubDate>Sat, 11 Oct 2014 00:00:00 -0500</pubDate><guid>tag:,2014-10-11:posts/2014/Oct/11/switching-to-pelican/</guid><category>pelican</category><category>blog</category></item><item><title>First Post</title><link>/posts/2013/Jan/13/first-post/</link><description>&lt;p&gt;This is the first post on my new blog. I decided to roll my own
+blog engine by hand for the experience. I first considered using
+&lt;a href="http://www.sqlalchemy.org/"&gt;SQL Alchemy&lt;/a&gt; and 
+&lt;a href="http://www.postgresql.org/"&gt;PostgreSQL&lt;/a&gt; but decided against it
+on this first go-around for the sake of simplicity. Instead I chose 
+to write the blog posts in &lt;a href="http://pypi.python.org/pypi/Markdown"&gt;Markdown&lt;/a&gt; 
+and use &lt;a href="http://packages.python.org/Flask-FlatPages/"&gt;Flask-FlatPages&lt;/a&gt;
+to connect the posts to the application. When I want to add a new
+post I just create a new file with the post title, date and content,
+push it up to the host, and that's it! Easy.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Tom Manley</dc:creator><pubDate>Sun, 13 Jan 2013 00:00:00 -0600</pubDate><guid>tag:,2013-01-13:posts/2013/Jan/13/first-post/</guid></item></channel></rss>

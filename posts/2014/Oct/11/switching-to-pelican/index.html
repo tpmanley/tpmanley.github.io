@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Switching to Pelican</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+<a href="https://github.com/tpmanley">
+<img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub" />
+</a>
+        <header id="banner" class="body">
+                <h1><a href="/">Tom Manley </a></h1>
+                <nav><ul>
+                    <li><a href="/pages/about.html">About</a></li>
+                    <li class="active"><a href="/category/blog.html">Blog</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/posts/2014/Oct/11/switching-to-pelican/" rel="bookmark"
+           title="Permalink to Switching to Pelican">Switching to Pelican</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2014-10-11T00:00:00-05:00">
+                Published: Sat 11 October 2014
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/tom-manley.html">Tom Manley</a>
+        </address>
+<p>In <a href="/category/blog.html">Blog</a>. </p>
+<p>tags: <a href="/tag/pelican.html">pelican</a> <a href="/tag/blog.html">blog</a> </p>
+</footer><!-- /.post-info -->      <p>The last two years have been spent ignoring this site so obviously
+it is time to redo it. A coworker told me about <a href="http://docs.getpelican.com/en/3.4.0/">Pelican</a>
+a while back and it seemed like it would fit my needs so I gave it a try. I turned
+out to be really easy and I managed to convert the site to use Pelican
+and publish to Heroku in about two hours.</p>
+<p>First I installed Pelican into a virtualenv and ran the quickstart:</p>
+<div class="highlight"><pre>pip install pelican
+pelican-quickstart
+</pre></div>
+
+
+<p>The quickstart just asks a few simple questions about the site. When
+it was done I poked around in <code>pelicanconf.py</code> to see what knobs could
+be fiddled with. I fixed up the timezone, removed SITES and filled in 
+the SOCIAL links. This is what it looks like today:</p>
+<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding: utf-8 -*- #</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">unicode_literals</span>
+
+<span class="n">AUTHOR</span> <span class="o">=</span> <span class="s">u&#39;Tom Manley&#39;</span>
+<span class="n">SITENAME</span> <span class="o">=</span> <span class="s">u&#39;Tom Manley&#39;</span>
+<span class="n">SITEURL</span> <span class="o">=</span> <span class="s">&#39;thomasmanley.org&#39;</span>
+
+<span class="n">PATH</span> <span class="o">=</span> <span class="s">&#39;content&#39;</span>
+
+<span class="n">TIMEZONE</span> <span class="o">=</span> <span class="s">&#39;America/Chicago&#39;</span>
+
+<span class="n">DEFAULT_LANG</span> <span class="o">=</span> <span class="s">u&#39;en&#39;</span>
+
+<span class="n">DEFAULT_CATEGORY</span> <span class="o">=</span> <span class="s">&#39;Dev&#39;</span>
+
+<span class="n">ARTICLE_URL</span> <span class="o">=</span> <span class="s">&#39;posts/{date:%Y}/{date:%b}/{date:</span><span class="si">%d</span><span class="s">}/{slug}/&#39;</span>
+<span class="n">ARTICLE_SAVE_AS</span> <span class="o">=</span> <span class="s">&#39;posts/{date:%Y}/{date:%b}/{date:</span><span class="si">%d</span><span class="s">}/{slug}/index.html&#39;</span>
+
+<span class="c"># Feed generation is usually not desired when developing</span>
+<span class="n">FEED_ALL_ATOM</span> <span class="o">=</span> <span class="bp">None</span>
+<span class="n">CATEGORY_FEED_ATOM</span> <span class="o">=</span> <span class="bp">None</span>
+<span class="n">TRANSLATION_FEED_ATOM</span> <span class="o">=</span> <span class="bp">None</span>
+
+<span class="c"># Social widget</span>
+<span class="n">GITHUB_URL</span> <span class="o">=</span> <span class="s">&#39;https://github.com/tpmanley&#39;</span>
+<span class="n">SOCIAL</span> <span class="o">=</span> <span class="p">((</span><span class="s">&#39;Twitter&#39;</span><span class="p">,</span> <span class="s">&#39;https://twitter.com/tpmanley&#39;</span><span class="p">),</span>
+          <span class="p">(</span><span class="s">&#39;Github&#39;</span><span class="p">,</span> <span class="s">&#39;https://github.com/tpmanley&#39;</span><span class="p">),</span>
+          <span class="p">(</span><span class="s">&#39;LinkedIn&#39;</span><span class="p">,</span> <span class="s">&#39;https://www.linkedin.com/in/tpmanley/&#39;</span><span class="p">),)</span>
+
+<span class="n">DEFAULT_PAGINATION</span> <span class="o">=</span> <span class="bp">False</span>
+</pre></div>
+
+
+<p>Since I setup Fabric during the quickstart process, testing the new site is easy:</p>
+<div class="highlight"><pre>fab reserve
+</pre></div>
+
+
+<p>This builds and serves up the site at <code>http://127.0.0.1:8000</code>. The first thing that struck
+me is how nice it looks. Just another reminder that I'm not a frontend kind of
+guy.</p>
+<p>Moving the content to Pelican was easy since it was already in Markdown. I just
+moved the static pages into <code>content/pages/</code> and the single blog post (yeah, I
+don't write much) into <code>content</code>.  </p>
+<p>The last step was to publish the new site on Heroku. First I enabled the Heroku
+buildpack:</p>
+<div class="highlight"><pre>heroku config:set <span class="nv">BUILDPACK_URL</span><span class="o">=</span>https://github.com/getpelican/heroku-buildpack-pelican
+</pre></div>
+
+
+<p>Then I removed the <code>web:</code> line from the <code>Procfile</code> so now it is empty. Finally
+I committed all the changes and pushed to Heroku like normal. And that was basically
+it!</p>
+<p>Only thing left to do is start writing more, and maybe replace the default theme.</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="https://twitter.com/tpmanley">Twitter</a></li>
+                            <li><a href="https://github.com/tpmanley">Github</a></li>
+                            <li><a href="https://www.linkedin.com/in/tpmanley/">LinkedIn</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

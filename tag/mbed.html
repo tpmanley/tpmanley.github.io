@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Tom Manley - mbed</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+<a href="https://github.com/tpmanley">
+<img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub" />
+</a>
+        <header id="banner" class="body">
+                <h1><a href="/">Tom Manley </a></h1>
+                <nav><ul>
+                    <li><a href="/pages/about.html">About</a></li>
+                    <li><a href="/category/blog.html">Blog</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/posts/2014/Dec/23/freedom-board-and-mbed/">Freedom board and mbed</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2014-12-23T00:00:00-06:00">
+                Published: Tue 23 December 2014
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/tom-manley.html">Tom Manley</a>
+        </address>
+<p>In <a href="/category/blog.html">Blog</a>. </p>
+<p>tags: <a href="/tag/frdm-kl25z.html">FRDM-KL25Z</a> <a href="/tag/mbed.html">mbed</a> <a href="/tag/logic8.html">logic8</a> </p>
+</footer><!-- /.post-info --><p>Freescale makes an inexpensive development platform for the Kinetis L series 
+processors called the Freedom board. I borrowed the 
+<a href="http://www.freescale.com/webapp/sps/site/prod_summary.jsp?code=FRDM-KL25Z">FRDM-KL25Z</a>
+from a coworker. It has a MKL25Z Cortex-M0+ processor with an RGB LED, a 
+capacitive touch slider, serial, GPIOs, etc... </p>
+<p>There are a number of options for develping for the Freedom board, including
+the Eclipse-based Kinetis Design Studio and CodeWarrior, but I decided to give
+<a href="https://mbed.org/">mbed</a> a try. Mbed is an operating system for ARM Cortex-M
+processors. It has a web-based development environment and compiler which makes
+it really easy to try out. </p>
+<p>The mbed environment has a number of sample apps for the KL25Z. The frdm_gpio
+app basically just flashes the RGB LED and a toggles a digial output. I added
+a SPI master device to the sample app that just wrote 0xA5 in a loop so I could
+have something interesting to look at with the Saleae logic analyzer. Here is 
+the code:</p>
+<div class="highlight"><pre><span class="cp">#include &quot;mbed.h&quot;</span>
+
+<span class="n">DigitalOut</span> <span class="nf">gpo</span><span class="p">(</span><span class="n">D0</span><span class="p">);</span>
+<span class="n">DigitalOut</span> <span class="nf">led</span><span class="p">(</span><span class="n">LED_RED</span><span class="p">);</span>
+<span class="n">SPI</span> <span class="nf">device</span><span class="p">(</span><span class="n">PTD2</span><span class="p">,</span> <span class="n">PTD3</span><span class="p">,</span> <span class="n">PTD1</span><span class="p">);</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">device</span><span class="p">.</span><span class="n">format</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="k">while</span> <span class="p">(</span><span class="nb">true</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">gpo</span> <span class="o">=</span> <span class="o">!</span><span class="n">gpo</span><span class="p">;</span> <span class="c1">// toggle pin</span>
+        <span class="n">led</span> <span class="o">=</span> <span class="o">!</span><span class="n">led</span><span class="p">;</span> <span class="c1">// toggle led</span>
+        <span class="n">device</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="mh">0xA5</span><span class="p">);</span>
+        <span class="n">wait</span><span class="p">(</span><span class="mf">0.2f</span><span class="p">);</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>I attached one of the probes on the Logic8 to pin PTD2 which was configured as
+the Master-In Slave-Out (MOSI) PIN on the SPI device. Another probe was attached
+to PTD1 which was configured as SCLK. Then I captured a trace while running the 
+app and verified the alternating bit pattern of 0xA5 showed up in the capture.</p>
+<p>This was all really simple but after spending so much time on management
+and business stuff lately it was fun to get my hands dirty. I definitely would
+like to learn more about mbed and also try out the Kinetis Design Studio.</p>                </article>
+            </aside><!-- /#featured -->
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="https://twitter.com/tpmanley">Twitter</a></li>
+                            <li><a href="https://github.com/tpmanley">Github</a></li>
+                            <li><a href="https://www.linkedin.com/in/tpmanley/">LinkedIn</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

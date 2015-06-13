@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>npm install TheEnemy</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+<a href="https://github.com/tpmanley">
+<img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub" />
+</a>
+        <header id="banner" class="body">
+                <h1><a href="/">Tom Manley </a></h1>
+                <nav><ul>
+                    <li><a href="/pages/about.html">About</a></li>
+                    <li class="active"><a href="/category/blog.html">Blog</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/posts/2015/Jan/06/npm-install-theenemy/" rel="bookmark"
+           title="Permalink to npm install TheEnemy">npm install TheEnemy</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2015-01-06T00:00:00-06:00">
+                Published: Tue 06 January 2015
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/tom-manley.html">Tom Manley</a>
+        </address>
+<p>In <a href="/category/blog.html">Blog</a>. </p>
+<p>tags: <a href="/tag/iot.html">IoT</a> <a href="/tag/cloud.html">cloud</a> <a href="/tag/m2m.html">M2M</a> </p>
+</footer><!-- /.post-info -->      <p>OK, TheEnemy is a bit harsh, but I did check out a competitor's device cloud
+solution recently. It is called <a href="http://octoblu.com">Octoblu</a> and was founded
+in early 2014 and acquired by <a href="http://www.citrix.com">Citrix</a> in December
+2014. There are a couple of things that intrigued me about this solution. The
+first is that their cloud platform called Meshblu is open sourced on GitHub
+so anyone can run their own private instance. The other is they support both
+CoAP and MQTT. These two protocols work well on resource and bandwidth 
+contrained devices like many IoT devices are bound to be and so I've been
+looking for an opportunity to get more experience with them. It looks like
+Octoblu will give me that chance.</p>
+<p>Installing Meshblu on my MacBook Pro was almost as simple as following the
+README in the <a href="https://github.com/octoblu/meshblu">GitHub repo</a>. First I
+cloned the repo:</p>
+<div class="highlight"><pre><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="o">:</span><span class="c1">//github.com/octoblu/meshblu.git</span>
+<span class="n">cd</span> <span class="n">meshblu</span>
+</pre></div>
+
+
+<p>Then I installed it:</p>
+<div class="highlight"><pre><span class="n">npm</span> <span class="n">install</span>
+</pre></div>
+
+
+<p>According to the README I was then supposed to copy the <code>config.fs.sample</code> file
+over the <code>config.js</code> file, but when I did that the next step didn't work so
+I just left <code>config.fs</code> as is.</p>
+<p>Meshblu optionally supports Mongo, Redis, ElasticSearch and Splunk for
+scalability and performance but I wasn't interested in any of that right now
+so I left the configuration with the default settings. I did change the
+HTTP and HTTPS port so I didn't need to run the server as root:</p>
+<div class="highlight"><pre><span class="gh">diff --git a/config.js b/config.js</span>
+<span class="gh">index db7b6c3..36b6a59 100644</span>
+<span class="gd">--- a/config.js</span>
+<span class="gi">+++ b/config.js</span>
+<span class="gu">@@ -16,9 +16,9 @@ module.exports = {</span>
+   mongo: {
+     databaseUrl: process.env.MONGODB_URI
+   },
+<span class="gd">-  port: parseInt(process.env.PORT) || 80,</span>
+<span class="gi">+  port: parseInt(process.env.PORT) || 8080,</span>
+   tls: {
+<span class="gd">-    sslPort: parseInt(process.env.SSL_PORT) || 443,</span>
+<span class="gi">+    sslPort: parseInt(process.env.SSL_PORT) || 8443,</span>
+</pre></div>
+
+
+<p>Next I ran the server:</p>
+<div class="highlight"><pre><span class="n">node</span> <span class="n">server</span><span class="p">.</span><span class="n">js</span> <span class="o">--</span><span class="n">http</span>
+
+<span class="n">MM</span>    <span class="n">MM</span>              <span class="n">hh</span>      <span class="n">bb</span>      <span class="n">lll</span>         
+<span class="n">MMM</span>  <span class="n">MMM</span>   <span class="n">eee</span>   <span class="n">sss</span>  <span class="n">hh</span>      <span class="n">bb</span>      <span class="n">lll</span> <span class="n">uu</span>   <span class="n">uu</span> 
+<span class="n">MM</span> <span class="n">MM</span> <span class="n">MM</span> <span class="n">ee</span>   <span class="n">e</span> <span class="n">s</span>     <span class="n">hhhhhh</span>  <span class="n">bbbbbb</span>  <span class="n">lll</span> <span class="n">uu</span>   <span class="n">uu</span> 
+<span class="n">MM</span>    <span class="n">MM</span> <span class="n">eeeee</span>   <span class="n">sss</span>  <span class="n">hh</span>   <span class="n">hh</span> <span class="n">bb</span>   <span class="n">bb</span> <span class="n">lll</span> <span class="n">uu</span>   <span class="n">uu</span> 
+<span class="n">MM</span>    <span class="n">MM</span>  <span class="n">eeeee</span>     <span class="n">s</span> <span class="n">hh</span>   <span class="n">hh</span> <span class="n">bbbbbb</span>  <span class="n">lll</span>  <span class="n">uuuu</span> <span class="n">u</span> 
+                 <span class="n">sss</span>                              
+<span class="n">Meshblu</span> <span class="p">(</span><span class="n">formerly</span> <span class="n">skynet</span><span class="p">.</span><span class="n">im</span><span class="p">)</span> <span class="n">development</span> <span class="n">environment</span> <span class="n">loaded</span><span class="p">...</span>
+
+<span class="n">Starting</span> <span class="n">HTTP</span><span class="o">/</span><span class="n">HTTPS</span><span class="p">...</span> <span class="n">done</span><span class="p">.</span>
+<span class="n">HTTP</span> <span class="n">listening</span> <span class="n">at</span> <span class="n">http</span><span class="o">:</span><span class="c1">//0.0.0.0:8080</span>
+</pre></div>
+
+
+<p>And finally a basic test:</p>
+<div class="highlight"><pre><span class="n">curl</span> <span class="o">-</span><span class="n">X</span> <span class="n">GET</span> <span class="n">http</span><span class="o">:</span><span class="c1">//localhost:8080/status</span>
+<span class="p">{</span><span class="s">&quot;meshblu&quot;</span><span class="o">:</span><span class="s">&quot;online&quot;</span><span class="p">}</span>
+</pre></div>
+
+
+<p>I got little stuck at this point because the I didn't read the documenation
+carefully and just tried commands pseudo-randomly. It didn't take too long 
+before I figured out I needed to add a device and then use the authentication
+credentials (a UUID and secret token) to use most of the HTTP API. That was pretty
+straightforward:</p>
+<div class="highlight"><pre><span class="n">curl</span> <span class="o">-</span><span class="n">X</span> <span class="n">POST</span> <span class="o">-</span><span class="n">d</span> <span class="s">&quot;type=example&quot;</span> <span class="n">http</span><span class="o">:</span><span class="c1">//localhost:8080/devices</span>
+<span class="p">{</span><span class="s">&quot;type&quot;</span><span class="o">:</span><span class="s">&quot;example&quot;</span><span class="p">,</span><span class="s">&quot;ipAddress&quot;</span><span class="o">:</span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">,</span><span class="s">&quot;uuid&quot;</span><span class="o">:</span><span class="s">&quot;7c348710-955a-11e4-820b-0f6c4a76a790&quot;</span><span class="p">,</span><span class="s">&quot;timestamp&quot;</span><span class="o">:</span><span class="s">&quot;2015-01-06T04:14:18.972Z&quot;</span><span class="p">,</span><span class="s">&quot;token&quot;</span><span class="o">:</span><span class="s">&quot;0086jbhffmc5zh0k9bckcr90lkvjkyb9&quot;</span><span class="p">,</span><span class="s">&quot;channel&quot;</span><span class="o">:</span><span class="s">&quot;main&quot;</span><span class="p">,</span><span class="s">&quot;online&quot;</span><span class="o">:</span><span class="nb">false</span><span class="p">,</span><span class="s">&quot;geo&quot;</span><span class="o">:</span><span class="n">null</span><span class="p">}</span>
+</pre></div>
+
+
+<p>The <code>uuid</code> and <code>token</code> fields are the important ones. To access say the 
+<code>/devices</code> endpoint you pass those fields in with the HTTP headers like this:</p>
+<div class="highlight"><pre><span class="n">curl</span> <span class="o">-</span><span class="n">X</span> <span class="n">GET</span> <span class="n">http</span><span class="o">:</span><span class="c1">//localhost:8080/devices --header &quot;meshblu_auth_uuid: 7c348710-955a-11e4-820b-0f6c4a76a790&quot; --header &quot;meshblu_auth_token: 0086jbhffmc5zh0k9bckcr90lkvjkyb9&quot;</span>
+<span class="p">{</span><span class="s">&quot;devices&quot;</span><span class="o">:</span><span class="p">[{</span><span class="s">&quot;type&quot;</span><span class="o">:</span><span class="s">&quot;example&quot;</span><span class="p">,</span><span class="s">&quot;ipAddress&quot;</span><span class="o">:</span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">,</span><span class="s">&quot;uuid&quot;</span><span class="o">:</span><span class="s">&quot;7c348710-955a-11e4-820b-0f6c4a76a790&quot;</span><span class="p">,</span><span class="s">&quot;timestamp&quot;</span><span class="o">:</span><span class="s">&quot;2015-01-06T04:14:18.972Z&quot;</span><span class="p">,</span><span class="s">&quot;token&quot;</span><span class="o">:</span><span class="s">&quot;0086jbhffmc5zh0k9bckcr90lkvjkyb9&quot;</span><span class="p">,</span><span class="s">&quot;channel&quot;</span><span class="o">:</span><span class="s">&quot;main&quot;</span><span class="p">,</span><span class="s">&quot;online&quot;</span><span class="o">:</span><span class="nb">false</span><span class="p">,</span><span class="s">&quot;geo&quot;</span><span class="o">:</span><span class="n">null</span><span class="p">,</span><span class="s">&quot;_id&quot;</span><span class="o">:</span><span class="s">&quot;L5tEWjAITwhp5n8H&quot;</span><span class="p">}]}</span>
+</pre></div>
+
+
+<p>That's about as far as I've got so far, but I look forward to trying out the
+CoAP and MQTT APIs in the near future.</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="https://twitter.com/tpmanley">Twitter</a></li>
+                            <li><a href="https://github.com/tpmanley">Github</a></li>
+                            <li><a href="https://www.linkedin.com/in/tpmanley/">LinkedIn</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>
