@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Tom Manley</title><link>http://thomasmanley.org/</link><description></description><atom:link href="http://thomasmanley.org/feeds/tom-manley.rss.xml" rel="self"></atom:link><lastBuildDate>Thu, 11 Jun 2015 00:00:00 -0500</lastBuildDate><item><title>Open Sesame</title><link>http://thomasmanley.org/posts/2015/Jun/11/open-sesame/</link><description>&lt;p&gt;I have been busy over the last few months working on a Wi-Fi controlled kennel door opener for
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Tom Manley</title><link href="http://thomasmanley.org/" rel="alternate"></link><link href="http://thomasmanley.org/feeds/blog.atom.xml" rel="self"></link><id>http://thomasmanley.org/</id><updated>2015-06-11T00:00:00-05:00</updated><entry><title>Open Sesame</title><link href="http://thomasmanley.org/posts/2015/Jun/11/open-sesame/" rel="alternate"></link><updated>2015-06-11T00:00:00-05:00</updated><author><name>Tom Manley</name></author><id>tag:thomasmanley.org,2015-06-11:posts/2015/Jun/11/open-sesame/</id><summary type="html">&lt;p&gt;I have been busy over the last few months working on a Wi-Fi controlled kennel door opener for
 my dog. Her kennel is the basement where it is cool and quiet, and it would be convenient to open
 the door without having to walk downstairs.&lt;/p&gt;
 &lt;p&gt;The brains is a &lt;a href="https://www.pjrc.com/teensy/teensyLC.html"&gt;Teensy LC&lt;/a&gt; that gets signaled
@@ -9,7 +9,7 @@ to fab it, and designed the servo mount and arm in &lt;a href="http://www.sketch
 my coworker 3D printed for me.&lt;/p&gt;
 &lt;p&gt;I'm still assembling the boards and working out what I hope are the last few bugs. I'll post
 more details when it is complete. In the meantime you can see the SW, HW and mechanical design
-files on &lt;a href="https://github.com/tpmanley/dogcage"&gt;Github&lt;/a&gt;.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Tom Manley</dc:creator><pubDate>Thu, 11 Jun 2015 00:00:00 -0500</pubDate><guid>tag:thomasmanley.org,2015-06-11:posts/2015/Jun/11/open-sesame/</guid><category>IoT</category><category>XBee</category><category>Kicad</category><category>Sketchup</category><category>Arduino</category></item><item><title>npm install TheEnemy</title><link>http://thomasmanley.org/posts/2015/Jan/06/npm-install-theenemy/</link><description>&lt;p&gt;OK, TheEnemy is a bit harsh, but I did check out a competitor's device cloud
+files on &lt;a href="https://github.com/tpmanley/dogcage"&gt;Github&lt;/a&gt;.&lt;/p&gt;</summary><category term="IoT"></category><category term="XBee"></category><category term="Kicad"></category><category term="Sketchup"></category><category term="Arduino"></category></entry><entry><title>npm install TheEnemy</title><link href="http://thomasmanley.org/posts/2015/Jan/06/npm-install-theenemy/" rel="alternate"></link><updated>2015-01-06T00:00:00-06:00</updated><author><name>Tom Manley</name></author><id>tag:thomasmanley.org,2015-01-06:posts/2015/Jan/06/npm-install-theenemy/</id><summary type="html">&lt;p&gt;OK, TheEnemy is a bit harsh, but I did check out a competitor's device cloud
 solution recently. It is called &lt;a href="http://octoblu.com"&gt;Octoblu&lt;/a&gt; and was founded
 in early 2014 and acquired by &lt;a href="http://www.citrix.com"&gt;Citrix&lt;/a&gt; in December
 2014. There are a couple of things that intrigued me about this solution. The
@@ -95,7 +95,7 @@ straightforward:&lt;/p&gt;
 
 
 &lt;p&gt;That's about as far as I've got so far, but I look forward to trying out the
-CoAP and MQTT APIs in the near future.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Tom Manley</dc:creator><pubDate>Tue, 06 Jan 2015 00:00:00 -0600</pubDate><guid>tag:thomasmanley.org,2015-01-06:posts/2015/Jan/06/npm-install-theenemy/</guid><category>IoT</category><category>cloud</category><category>M2M</category></item><item><title>Freedom board and mbed</title><link>http://thomasmanley.org/posts/2014/Dec/23/freedom-board-and-mbed/</link><description>&lt;p&gt;Freescale makes an inexpensive development platform for the Kinetis L series 
+CoAP and MQTT APIs in the near future.&lt;/p&gt;</summary><category term="IoT"></category><category term="cloud"></category><category term="M2M"></category></entry><entry><title>Freedom board and mbed</title><link href="http://thomasmanley.org/posts/2014/Dec/23/freedom-board-and-mbed/" rel="alternate"></link><updated>2014-12-23T00:00:00-06:00</updated><author><name>Tom Manley</name></author><id>tag:thomasmanley.org,2014-12-23:posts/2014/Dec/23/freedom-board-and-mbed/</id><summary type="html">&lt;p&gt;Freescale makes an inexpensive development platform for the Kinetis L series 
 processors called the Freedom board. I borrowed the 
 &lt;a href="http://www.freescale.com/webapp/sps/site/prod_summary.jsp?code=FRDM-KL25Z"&gt;FRDM-KL25Z&lt;/a&gt;
 from a coworker. It has a MKL25Z Cortex-M0+ processor with an RGB LED, a 
@@ -135,7 +135,7 @@ to PTD1 which was configured as SCLK. Then I captured a trace while running the
 app and verified the alternating bit pattern of 0xA5 showed up in the capture.&lt;/p&gt;
 &lt;p&gt;This was all really simple but after spending so much time on management
 and business stuff lately it was fun to get my hands dirty. I definitely would
-like to learn more about mbed and also try out the Kinetis Design Studio.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Tom Manley</dc:creator><pubDate>Tue, 23 Dec 2014 00:00:00 -0600</pubDate><guid>tag:thomasmanley.org,2014-12-23:posts/2014/Dec/23/freedom-board-and-mbed/</guid><category>FRDM-KL25Z</category><category>mbed</category><category>logic8</category></item><item><title>Router Problems</title><link>http://thomasmanley.org/posts/2014/Nov/07/router-problems/</link><description>&lt;p&gt;I've spent the last few evenings messing around with my Wi-Fi router. It's an Asus RT-N66U 
+like to learn more about mbed and also try out the Kinetis Design Studio.&lt;/p&gt;</summary><category term="FRDM-KL25Z"></category><category term="mbed"></category><category term="logic8"></category></entry><entry><title>Router Problems</title><link href="http://thomasmanley.org/posts/2014/Nov/07/router-problems/" rel="alternate"></link><updated>2014-11-07T00:00:00-06:00</updated><author><name>Tom Manley</name></author><id>tag:thomasmanley.org,2014-11-07:posts/2014/Nov/07/router-problems/</id><summary type="html">&lt;p&gt;I've spent the last few evenings messing around with my Wi-Fi router. It's an Asus RT-N66U 
 Dark Knight and it worked great for a few months but then it all went south on Monday 
 night. Basically all of our devices couldn't load web pages, and rebooting the router and
 the modem didn't help. The worst was the Roku didn't work so we had to watch basic cable!
@@ -256,7 +256,7 @@ how that works yet. &lt;/p&gt;
 operation is crap and 5Ghz is working fine. I've tried change channels and forcing
 20MHz channels to no avail. It's definitely looking like it is a hardware problem. Google
 indicates lot of people have had similar issues and none of the suggested fixes have
-worked for me.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Tom Manley</dc:creator><pubDate>Fri, 07 Nov 2014 00:00:00 -0600</pubDate><guid>tag:thomasmanley.org,2014-11-07:posts/2014/Nov/07/router-problems/</guid><category>wi-fi</category></item><item><title>Podcasts</title><link>http://thomasmanley.org/posts/2014/Oct/29/podcasts/</link><description>&lt;p&gt;These are the podcasts I'm listening to lately.&lt;/p&gt;
+worked for me.&lt;/p&gt;</summary><category term="wi-fi"></category></entry><entry><title>Podcasts</title><link href="http://thomasmanley.org/posts/2014/Oct/29/podcasts/" rel="alternate"></link><updated>2014-10-29T00:00:00-05:00</updated><author><name>Tom Manley</name></author><id>tag:thomasmanley.org,2014-10-29:posts/2014/Oct/29/podcasts/</id><summary type="html">&lt;p&gt;These are the podcasts I'm listening to lately.&lt;/p&gt;
 &lt;h1&gt;&lt;a href="http://embedded.fm/"&gt;Embedded&lt;/a&gt;&lt;/h1&gt;
 &lt;p&gt;This is a technical podcast hosted by Elecia White, author of 
 &lt;a href="http://www.amazon.com/gp/product/1449302149/ref=as_li_ss_tl?ie=UTF8&amp;amp;camp=1789&amp;amp;creative=390957&amp;amp;creativeASIN=1449302149&amp;amp;linkCode=as2&amp;amp;tag=httpembefm-20"&gt;Making Embedded Systems&lt;/a&gt;. It's focused on embedded devices, 
@@ -272,7 +272,7 @@ episodes so far but they have covered a lot of topics I'm interested in like IoT
 &lt;p&gt;This one is a video podcast from the company behind the &lt;a href="https://wifipineapple.com/"&gt;Wi-Fi Pineapple&lt;/a&gt;.
 I've only see a couple of episodes but it seems pretty good so far. It's already given me some ideas
 of some things I want to do with the Pineapple I bought for use at work and some Android apps I
-want to write.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Tom Manley</dc:creator><pubDate>Wed, 29 Oct 2014 00:00:00 -0500</pubDate><guid>tag:thomasmanley.org,2014-10-29:posts/2014/Oct/29/podcasts/</guid><category>podcast</category></item><item><title>Switching to Pelican</title><link>http://thomasmanley.org/posts/2014/Oct/11/switching-to-pelican/</link><description>&lt;p&gt;The last two years have been spent ignoring this site so obviously
+want to write.&lt;/p&gt;</summary><category term="podcast"></category></entry><entry><title>Switching to Pelican</title><link href="http://thomasmanley.org/posts/2014/Oct/11/switching-to-pelican/" rel="alternate"></link><updated>2014-10-11T00:00:00-05:00</updated><author><name>Tom Manley</name></author><id>tag:thomasmanley.org,2014-10-11:posts/2014/Oct/11/switching-to-pelican/</id><summary type="html">&lt;p&gt;The last two years have been spent ignoring this site so obviously
 it is time to redo it. A coworker told me about &lt;a href="http://docs.getpelican.com/en/3.4.0/"&gt;Pelican&lt;/a&gt;
 a while back and it seemed like it would fit my needs so I gave it a try. I turned
 out to be really easy and I managed to convert the site to use Pelican
@@ -341,7 +341,7 @@ buildpack:&lt;/p&gt;
 &lt;p&gt;Then I removed the &lt;code&gt;web:&lt;/code&gt; line from the &lt;code&gt;Procfile&lt;/code&gt; so now it is empty. Finally
 I committed all the changes and pushed to Heroku like normal. And that was basically
 it!&lt;/p&gt;
-&lt;p&gt;Only thing left to do is start writing more, and maybe replace the default theme.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Tom Manley</dc:creator><pubDate>Sat, 11 Oct 2014 00:00:00 -0500</pubDate><guid>tag:thomasmanley.org,2014-10-11:posts/2014/Oct/11/switching-to-pelican/</guid><category>pelican</category><category>blog</category></item><item><title>First Post</title><link>http://thomasmanley.org/posts/2013/Jan/13/first-post/</link><description>&lt;p&gt;This is the first post on my new blog. I decided to roll my own
+&lt;p&gt;Only thing left to do is start writing more, and maybe replace the default theme.&lt;/p&gt;</summary><category term="pelican"></category><category term="blog"></category></entry><entry><title>First Post</title><link href="http://thomasmanley.org/posts/2013/Jan/13/first-post/" rel="alternate"></link><updated>2013-01-13T00:00:00-06:00</updated><author><name>Tom Manley</name></author><id>tag:thomasmanley.org,2013-01-13:posts/2013/Jan/13/first-post/</id><summary type="html">&lt;p&gt;This is the first post on my new blog. I decided to roll my own
 blog engine by hand for the experience. I first considered using
 &lt;a href="http://www.sqlalchemy.org/"&gt;SQL Alchemy&lt;/a&gt; and 
 &lt;a href="http://www.postgresql.org/"&gt;PostgreSQL&lt;/a&gt; but decided against it
@@ -350,4 +350,4 @@ to write the blog posts in &lt;a href="http://pypi.python.org/pypi/Markdown"&gt;
 and use &lt;a href="http://packages.python.org/Flask-FlatPages/"&gt;Flask-FlatPages&lt;/a&gt;
 to connect the posts to the application. When I want to add a new
 post I just create a new file with the post title, date and content,
-push it up to the host, and that's it! Easy.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Tom Manley</dc:creator><pubDate>Sun, 13 Jan 2013 00:00:00 -0600</pubDate><guid>tag:thomasmanley.org,2013-01-13:posts/2013/Jan/13/first-post/</guid></item></channel></rss>
+push it up to the host, and that's it! Easy.&lt;/p&gt;</summary></entry></feed>
